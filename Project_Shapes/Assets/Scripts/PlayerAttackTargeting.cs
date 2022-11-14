@@ -7,10 +7,11 @@ public class PlayerAttackTargeting : MonoBehaviour
     public float minTargetDistance;
     public GameObject model;
     public CharacterController player;
-    public float turnTimer = 0.5f;
+    public float turnTimer = 1f;
 
     private float timer = 0f;
-    private float oldTargetingRotation = 0;
+    private float oldTargetingRotation = 0f;
+    private float oldMovementRotation = 0f;
     
     //find nearest target enemy 
     void Update()
@@ -37,7 +38,7 @@ public class PlayerAttackTargeting : MonoBehaviour
     //turn character towards enemy or in movement direction
     private void TargetEnemy(GameObject target)
     {
-        //if ther are no enemies nearby, player turns back towards movement direction
+        //calculate rotation if targeting enemy
         if (target == null)
         {
             if (timer > 0)
@@ -53,14 +54,15 @@ public class PlayerAttackTargeting : MonoBehaviour
             Vector3 targetVector = target.transform.position - this.transform.position;
             oldTargetingRotation = Mathf.Rad2Deg * Mathf.Atan2(targetVector.x, targetVector.z);
         }
-        //todo: lerp movemen rotation with current rotation
-        float movementRotation = Mathf.Rad2Deg * Mathf.Atan2(player.velocity.x, player.velocity.z);
 
-        float lerpRotation = Mathf.LerpAngle(movementRotation, oldTargetingRotation, timer);
+        //claculate rotation of movement
+        if (player.velocity.magnitude != 0)
+            oldMovementRotation = Mathf.Rad2Deg * Mathf.Atan2(player.velocity.x, player.velocity.z);
 
-        model.transform.rotation = Quaternion.AngleAxis(lerpRotation, Vector3.up);
-
-        //place targeting animation
+        //if ther are no enemies nearby, player slowly turns back towards movement direction
+        float targetLerpedRotation = Mathf.LerpAngle(oldMovementRotation, oldTargetingRotation, timer);
+        //slowly rotate player towrads the target roation through lerp
+        player.gameObject.transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(player.transform.rotation.eulerAngles.y ,targetLerpedRotation, 0.5f), Vector3.up);
     }
 
     private void OnDrawGizmos()
@@ -73,5 +75,8 @@ public class PlayerAttackTargeting : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(this.transform.position, target.transform.position);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(this.transform.position, player.velocity);
     }
 }
