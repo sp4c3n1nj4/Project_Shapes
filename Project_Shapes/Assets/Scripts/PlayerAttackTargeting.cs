@@ -7,19 +7,18 @@ public class PlayerAttackTargeting : MonoBehaviour
     public float minTargetDistance;
     public GameObject model;
     public CharacterController player;
-    public float turnTimer = 0.5f;
 
-    private float timer = 0f;
-    private float oldTargetingRotation = 0;
+    private float oldMovementRotation = 0;
     
     //find nearest target enemy 
     void Update()
     {
-        TargetEnemy(FindClosestEnemy());
+        TurnCharacter();      
     }
 
     private GameObject FindClosestEnemy()
     {
+        //get all enemies end return closest game object
         GameObject target = null;
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -34,33 +33,36 @@ public class PlayerAttackTargeting : MonoBehaviour
         return target;
     }
 
-    //turn character towards enemy or in movement direction
-    private void TargetEnemy(GameObject target)
+    private void TurnCharacter()
+    {
+        //turn character towards enemy or in movement direction
+        float rotation = TargetEnemy(FindClosestEnemy());
+
+        //slowly turn character towards intended rotation
+        float lerpedRotation = Mathf.LerpAngle(rotation, player.transform.rotation.eulerAngles.y, 0.5f);
+
+        player.transform.rotation = Quaternion.AngleAxis(lerpedRotation, Vector3.up);
+    }
+
+    
+    private float TargetEnemy(GameObject target)
     {
         //if ther are no enemies nearby, player turns back towards movement direction
         if (target == null)
         {
-            if (timer > 0)
+            //calculate rotation of current movement direction
+            if (Mathf.Abs(player.velocity.x) > 0 || Mathf.Abs(player.velocity.z) > 0)
             {
-                timer -= Time.deltaTime;
+                oldMovementRotation = Mathf.Rad2Deg * Mathf.Atan2(player.velocity.x, player.velocity.z);
             }
-            timer = Mathf.Clamp(timer, 0, 1);
+            return oldMovementRotation;
         }
         else
         {
-            timer = turnTimer;
-
+            //calculate rotation towards target
             Vector3 targetVector = target.transform.position - this.transform.position;
-            oldTargetingRotation = Mathf.Rad2Deg * Mathf.Atan2(targetVector.x, targetVector.z);
+            return Mathf.Rad2Deg * Mathf.Atan2(targetVector.x, targetVector.z);
         }
-        //todo: lerp movemen rotation with current rotation
-        float movementRotation = Mathf.Rad2Deg * Mathf.Atan2(player.velocity.x, player.velocity.z);
-
-        float lerpRotation = Mathf.LerpAngle(movementRotation, oldTargetingRotation, timer);
-
-        model.transform.rotation = Quaternion.AngleAxis(lerpRotation, Vector3.up);
-
-        //place targeting animation
     }
 
     private void OnDrawGizmos()
