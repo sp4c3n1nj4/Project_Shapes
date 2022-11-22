@@ -11,27 +11,31 @@ public enum BossAbilityEnum
 }
 
 [Serializable]
-public struct BossMoveS
+public class BossAbilities
 {
-    [SerializeField]
-    public float delayTimer { get; }
-    [SerializeField]
-    public float speed { get; }
-    [SerializeField]
-    public Vector3 position { get; }
+    [SerializeReference]
+    public float delayTimer;
 }
 
-public struct BossAttack
+[Serializable]
+public class BossMove : BossAbilities
 {
-    [SerializeField]
-    public float delayTimer { get; }
-    [SerializeField]
-    public Vector3 position { get; }
-    [SerializeField]
-    public Quaternion rotation { get; }
-    [SerializeField]
-    public float damage { get; }
-    [SerializeField]
-    public float size { get; }
+    [SerializeReference]
+    public float speed;
+    [SerializeReference]
+    public Vector3 position;
+}
+
+[Serializable]
+public class BossAttack : BossAbilities
+{
+    [SerializeReference]
+    public Vector3 position;
+    [SerializeReference]
+    public Quaternion rotation;
+    [SerializeReference]
+    public float damage;
+    [SerializeReference]
+    public float size;
     
 }

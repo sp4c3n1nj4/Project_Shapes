@@ -7,7 +7,7 @@ using System;
 public class BossFightManager : MonoBehaviour
 {
     [SerializeField]
-    private List<object> bossTimeline = new List<object>(1) { new BossMoveS() };
+    private List<BossAbilities> bossTimeline;
     [SerializeField]
     private Dictionary<string, Action> bossAbilityDictionary = new Dictionary<string, Action>();
 
