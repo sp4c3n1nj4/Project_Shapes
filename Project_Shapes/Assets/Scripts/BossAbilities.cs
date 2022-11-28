@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 
 [Serializable]
 public enum BossAbilityEnum
@@ -13,29 +16,43 @@ public enum BossAbilityEnum
 [Serializable]
 public class BossAbilities
 {
-    [SerializeReference]
     public float delayTimer;
 }
 
 [Serializable]
 public class BossMove : BossAbilities
 {
-    [SerializeReference]
     public float speed;
-    [SerializeReference]
+
     public Vector3 position;
 }
 
 [Serializable]
 public class BossAttack : BossAbilities
 {
-    [SerializeReference]
     public Vector3 position;
-    [SerializeReference]
-    public Quaternion rotation;
-    [SerializeReference]
+
+    public Vector3 rotation;
+
     public float damage;
-    [SerializeReference]
+
     public float size;
     
+}
+
+[CustomPropertyDrawer(typeof(BossMove))]
+public class BossMoveDrawer : PropertyDrawer
+{
+    public override VisualElement CreatePropertyGUI(SerializedProperty property)
+    {
+        var container = new VisualElement();
+
+        var speedField = new PropertyField(property.FindPropertyRelative("speed"));
+        var positionField = new PropertyField(property.FindPropertyRelative("position"));
+
+        container.Add(speedField);
+        container.Add(positionField);
+
+        return container;
+    }
 }

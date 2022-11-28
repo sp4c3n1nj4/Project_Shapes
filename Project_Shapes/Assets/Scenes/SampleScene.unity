@@ -382,8 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossTimeline:
-  - delayTimer: 0
-  - delayTimer: 0
+  - delayTimer: 1
 --- !u!1 &409204658
 GameObject:
   m_ObjectHideFlags: 3
