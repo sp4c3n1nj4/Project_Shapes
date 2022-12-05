@@ -12,13 +12,7 @@ public class BossFightManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(bossTimeline[0].delayTimer);
-
         var item = bossTimeline[0] as BossMove;
-
-        Debug.Log(item.speed);
-        Debug.Log(item.position);
-
     }
 
     private void BossMoveFunction(float delayTimer, float speed, Vector3 position)

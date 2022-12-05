@@ -9,6 +9,7 @@ public class FloatEvent : UnityEvent<float> { }
 public class Enemy : MonoBehaviour
 {
     public float health;
+    public float maxHealth;
     public int rarity;
     public float speed;
     public float targetRange;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
     private void TakeDamage(float damage)
     {
         health -= damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
     }
 
     private void Update()
