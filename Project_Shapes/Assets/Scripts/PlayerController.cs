@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        //todo: fake gravity - just keep it flat
     }
 
     //move player in fixed update

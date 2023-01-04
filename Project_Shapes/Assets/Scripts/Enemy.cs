@@ -10,15 +10,14 @@ public class Enemy : MonoBehaviour
 {
     public float health;
     public float maxHealth;
-    public int rarity;
     public float speed;
-    public float targetRange;
 
     public UnityEvent DeathEvent;
     public FloatEvent DamageEvent;
 
     private void Start()
     {
+        //events for taking damage and dying
         if (DeathEvent == null)
             DeathEvent = new UnityEvent();
 
@@ -29,17 +28,15 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage(float damage)
     {
+        //subtract taken damage from health
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
-    }
-
-    private void Update()
-    {
         UpdateHealth();
     }
 
     private void UpdateHealth()
     {
+        //check if enemy is dead
         if (health <= 0)
             DeathEvent.Invoke();
     }
