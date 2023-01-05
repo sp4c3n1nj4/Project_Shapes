@@ -8,12 +8,26 @@ public class PlayerAttackTargeting : MonoBehaviour
     public GameObject model;
     public CharacterController player;
 
+    [SerializeField]
+    private float dps;
+
     private float oldMovementRotation = 0;
     
     //find nearest target enemy 
     void Update()
     {
-        TurnCharacter();      
+        TurnCharacter();
+        PlayerAttack();
+    }
+
+    private void PlayerAttack()
+    {
+        GameObject target = FindClosestEnemy();
+
+        if (target == null)
+            return;
+
+        target.GetComponent<EnemyHealth>().TakeDamage(dps * Time.deltaTime);
     }
 
     private GameObject FindClosestEnemy()
