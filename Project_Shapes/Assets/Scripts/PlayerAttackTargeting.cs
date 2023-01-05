@@ -24,7 +24,7 @@ public class PlayerAttackTargeting : MonoBehaviour
     {
         GameObject target = FindClosestEnemy();
 
-        if (target == null)
+        if (target == null || player.velocity.magnitude > 0)
             return;
 
         target.GetComponent<EnemyHealth>().TakeDamage(dps * Time.deltaTime);

@@ -47,10 +47,10 @@ public class HitBox : MonoBehaviour
             {
                 PlayerHit();
                 stop = true;
-                Destroy(gameObject, 0.5f);
+                Destroy(gameObject, 0.2f);
             }
             else
-                Destroy(gameObject, 0.5f);
+                Destroy(gameObject, 0.2f);
         }
     }
 

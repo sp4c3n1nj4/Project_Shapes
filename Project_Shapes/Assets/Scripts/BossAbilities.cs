@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor;
-using UnityEditor.UIElements;
-using UnityEngine.UIElements;
 
 [Serializable]
 public class BossAbilities
@@ -32,6 +29,7 @@ public class BossAttack : BossAbilities
 [Serializable]
 public class HitBoxAttack
 {
+    //class hold all the necessary variables to instantiate a hitbox
     public hitBoxType hitBoxType;
     public float damage;
     public float x;
@@ -43,6 +41,7 @@ public class HitBoxAttack
 
 public enum hitBoxType
 {
+    //enum to differentiate between the two hitbox types
     Cube,
     Cylinder
 }

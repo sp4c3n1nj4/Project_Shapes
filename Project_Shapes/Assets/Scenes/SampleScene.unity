@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fcd6d39a781684eb60a162af26f412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTargetDistance: 9
+  minTargetDistance: 7.5
   model: {fileID: 84533981}
   player: {fileID: 159407179}
   dps: 1
@@ -710,48 +710,302 @@ MonoBehaviour:
   - {fileID: 4474099656080766052, guid: 9671eeb449f3bd44aa08f5ff5d481a40, type: 3}
   con: {fileID: 314166798}
   bossTimeline:
-  - rid: 1312146291211632654
-  - rid: 1312146291211632689
   - rid: 1312146291211632709
+  - rid: 1312146308681433092
+  - rid: 1312146308681433095
+  - rid: 1312146308681433098
+  - rid: 1312146308681433112
+  - rid: 1312146308681433115
+  - rid: 1312146308681433120
+  - rid: 1312146308681433123
+  - rid: 1312146308681433124
+  - rid: 1312146308681433125
+  - rid: 1312146308681433128
+  - rid: 1312146308681433129
+  - rid: 1312146308681433130
+  - rid: 1312146308681433131
+  - rid: 1312146308681433132
+  - rid: 1312146308681433133
+  index: 15
   references:
     version: 2
     RefIds:
-    - rid: 1312146291211632654
-      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
-      data:
-        delayTimer: 5
-        boxAttacks:
-        - hitBoxType: 0
-          damage: 1
-          x: 20
-          y: 40
-          time: 5
-          position: {x: -10, y: 0.05, z: 0}
-          rotation: {x: 0, y: 0, z: 0}
-    - rid: 1312146291211632689
-      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
-      data:
-        delayTimer: 5
-        boxAttacks:
-        - hitBoxType: 0
-          damage: 1
-          x: 20
-          y: 40
-          time: 5
-          position: {x: 10, y: 0.05, z: 0}
-          rotation: {x: 0, y: 0, z: 0}
     - rid: 1312146291211632709
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 3
+        boxAttacks:
+        - hitBoxType: 1
+          damage: 1
+          x: 20
+          y: 20
+          time: 3
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433092
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 20
+          y: 40
+          time: 5
+          position: {x: -10, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433095
       type: {class: BossAttack, ns: , asm: Assembly-CSharp}
       data:
         delayTimer: 10
         boxAttacks:
-        - hitBoxType: 1
+        - hitBoxType: 0
+          damage: 1
+          x: 20
+          y: 40
+          time: 5
+          position: {x: 10, y: 0, z: 0}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433098
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
           damage: 1
           x: 10
           y: 10
           time: 5
+          position: {x: 5, y: 0, z: 15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 5, y: 0, z: -5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -15, y: 0, z: 15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -15, y: 0, z: -5}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433112
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 5, y: 0, z: 5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -15, y: 0, z: 5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 5, y: 0, z: -15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -15, y: 0, z: -15}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433115
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -5, y: 0, z: 5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -5, y: 0, z: -15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 15, y: 0, z: -15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 15, y: 0, z: 5}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433120
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 0
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 15, y: 0, z: -5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: 15, y: 0, z: 15}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -5, y: 0, z: -5}
+          rotation: {x: 0, y: 0, z: 0}
+        - hitBoxType: 0
+          damage: 1
+          x: 10
+          y: 10
+          time: 5
+          position: {x: -5, y: 0, z: 15}
+          rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433123
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 3
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 5
           position: {x: 0, y: 0, z: 0}
           rotation: {x: 0, y: 0, z: 0}
+    - rid: 1312146308681433124
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 2
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 4
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 22.5, z: 0}
+    - rid: 1312146308681433125
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 3
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 45, z: 0}
+    - rid: 1312146308681433128
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 67.5, z: 0}
+    - rid: 1312146308681433129
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 90, z: 0}
+    - rid: 1312146308681433130
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 112.5, z: 0}
+    - rid: 1312146308681433131
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 135, z: 0}
+    - rid: 1312146308681433132
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 157.5, z: 0}
+    - rid: 1312146308681433133
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        delayTimer: 1
+        boxAttacks:
+        - hitBoxType: 0
+          damage: 1
+          x: 60
+          y: 10
+          time: 2
+          position: {x: 0, y: 0, z: 0}
+          rotation: {x: 0, y: 180, z: 0}
 --- !u!143 &314166798
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2006,6 +2260,103 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1372420410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372420414}
+  - component: {fileID: 1372420413}
+  - component: {fileID: 1372420412}
+  - component: {fileID: 1372420411}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1372420411
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372420410}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1372420412
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372420410}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1372420413
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372420410}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1372420414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372420410}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.11, y: 0, z: 15.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1375391024
 GameObject:
   m_ObjectHideFlags: 0

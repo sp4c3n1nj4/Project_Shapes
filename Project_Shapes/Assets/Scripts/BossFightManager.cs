@@ -15,6 +15,7 @@ public class BossFightManager : MonoBehaviour
     [SerializeReference, SerializeReferenceButton]
     public List<BossAbilities> bossTimeline;
 
+    [SerializeField]
     private int index = 0;
  
     private void Start()
@@ -26,7 +27,7 @@ public class BossFightManager : MonoBehaviour
     private void EndFight()
     {
         //End the fight if end of list is reached
-        throw new NotImplementedException();
+        Debug.LogWarning("End of Boss Timeline List reached");
     }
 
     private void DoAbility(BossAbilities ability)
