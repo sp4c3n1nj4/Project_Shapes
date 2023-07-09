@@ -145,20 +145,25 @@ public class BossFightManager : MonoBehaviour
                     break;
             }
 
-            HitBox(h, attacks[i].effect, attacks[i].duration, attacks[i].direction, attacks[i].damage, attacks[i].scale.x, attacks[i].scale.y, attacks[i].castTime, target, attacks[i].Yrotation);
+            HitBox(h, target, attacks[i]);
         }
     }
 
-    private void HitBox(int index, HitBoxEffect[] effect, float duration, Vector2 direction, float damage, float x, float y, float castTime, Vector3 target, float rotation)
+    private void HitBox(int index, Vector3 target, HitBoxAttack attack)
     {
         //instantiate a hitbox and set all its variables
-        GameObject b = Instantiate(hitboxes[index], target, Quaternion.Euler(0, rotation, 0));
-        b.transform.localScale = new Vector3(x, b.transform.localScale.y, y);
+        GameObject b = Instantiate(hitboxes[index], target, Quaternion.Euler(0, attack.Yrotation, 0));
+        b.transform.localScale = new Vector3(attack.scale.x, b.transform.localScale.y, attack.scale.y);
 
-        b.GetComponent<HitBox>().castTime = castTime;
-        b.GetComponent<HitBox>().effect = effect;
-        b.GetComponent<HitBox>().duration = duration;
-        b.GetComponent<HitBox>().direction = direction;
-        b.GetComponent<HitBox>().damage = damage;
+        b.GetComponent<HitBox>().castTime = attack.castTime;
+
+        b.GetComponent<HitBox>().effect = attack.effect;
+        b.GetComponent<HitBox>().hitBoxDuration = attack.hitBoxDuration;
+        b.GetComponent<HitBox>().direction = attack.direction;
+        b.GetComponent<HitBox>().damage = attack.damage;
+
+        b.GetComponent<HitBox>().status = attack.status;
+        b.GetComponent<HitBox>().statusDuration = attack.statusDuration;
+        b.GetComponent<HitBox>().cleanseStatus = attack.cleanseStatus;
     }
 }

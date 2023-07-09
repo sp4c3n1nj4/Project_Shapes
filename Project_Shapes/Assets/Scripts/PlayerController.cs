@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    public float slow = 1;
     public CharacterController player;
 
     private Vector3 directionInput;
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     //move player in fixed update
     private void MovePlayer()
     {
-        player.Move(directionInput * (Time.fixedDeltaTime * speed));
+        player.Move(directionInput * (Time.fixedDeltaTime * speed * slow));
     }
 
     //get player input

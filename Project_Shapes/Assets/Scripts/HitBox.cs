@@ -8,9 +8,13 @@ public class HitBox : MonoBehaviour
     public float castTime;
 
     public HitBoxEffect[] effect;
-    public float duration;
+    public float hitBoxDuration;
     public Vector2 direction;
     public float damage;
+
+    public StatusEffectData[] status;
+    public float statusDuration;
+    public StatusEffectData[] cleanseStatus;
 
     private float timer = 0;
     private Material material;
@@ -86,7 +90,7 @@ public class HitBox : MonoBehaviour
     {
         if (UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.continous))
         {
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(hitBoxDuration);
             Destroy(gameObject, 0.2f);
         }
         else

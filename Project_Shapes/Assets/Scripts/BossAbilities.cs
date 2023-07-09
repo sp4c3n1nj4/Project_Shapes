@@ -64,10 +64,13 @@ public class HitBoxAttack
     public float castTime;
 
     public HitBoxEffect[] effect;
-    public float duration = 0;
+    public float hitBoxDuration = 0;
     public Vector2 direction = Vector2.zero;
     public float damage = 0;
 
+    public StatusEffectData[] status = new StatusEffectData[0];
+    public float statusDuration = 0;
+    public StatusEffectData[] cleanseStatus = new StatusEffectData[0];
 
     //scale and rotation get set durant instantiate
     public Vector2 scale;    

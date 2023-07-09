@@ -10,6 +10,7 @@ public class PlayerAttackTargeting : MonoBehaviour
 
     [SerializeField]
     private float dps;
+    public float weak = 1;
 
     private float oldMovementRotation = 0;
     
@@ -27,7 +28,7 @@ public class PlayerAttackTargeting : MonoBehaviour
         if (target == null || player.velocity.magnitude > 0)
             return;
 
-        target.GetComponent<EnemyHealth>().TakeDamage(dps * Time.deltaTime);
+        target.GetComponent<EnemyHealth>().TakeDamage(dps * Time.deltaTime * weak);
     }
 
     private GameObject FindClosestEnemy()
