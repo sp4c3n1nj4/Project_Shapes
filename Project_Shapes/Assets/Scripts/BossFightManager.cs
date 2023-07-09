@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 [Serializable]
 public class BossFightManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class BossFightManager : MonoBehaviour
     private GameObject[] hitboxes;
     [SerializeField]
     private CharacterController con;
+    [SerializeField]
+    private TextMeshProUGUI timerUI;
 
     //using a custom Unity Package myde by Textus Games, allows to set and save child classes in the editor
     [SerializeReference, SerializeReferenceButton]
@@ -17,11 +20,32 @@ public class BossFightManager : MonoBehaviour
 
     [SerializeField]
     private int index = 0;
- 
+    [SerializeField]
+    private float timer = 90;
+
     private void Start()
     {
-        //start the first ability in the timeline on script start
-        DoAbility(bossTimeline[index]);
+        //Sort List to ensure ability to execute first is first
+        bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));
+    }
+
+    private void Update()
+    {
+        //advance timer and update ui      
+        timer += Time.deltaTime;
+        timerUI.text = timer.ToString("N2");
+
+        if (timer > bossTimeline[index].time)
+        {
+            DoAbility(bossTimeline[index]);
+            index++;
+        }
+
+        if (timer > bossTimeline[bossTimeline.Count].time)
+        {
+            EndFight();
+            return;
+        }
     }
 
     private void EndFight()
@@ -36,14 +60,14 @@ public class BossFightManager : MonoBehaviour
         if (ability.GetType() == typeof(BossMove))
         {
             var a = ability as BossMove;
-            BossMoveFunction(a.speed, a.position);
-            StartCoroutine(DelayTimer(a.delayTimer));
+            BossMoveFunction(a.moveDuration, a.offSet, a.random, a.target);
+            //StartCoroutine(DelayTimer(a.time));
         }
         else if (ability.GetType() == typeof(BossAttack))
         {
             var a = ability as BossAttack;
             BossAttackFunction(a.boxAttacks);
-            StartCoroutine(DelayTimer(a.delayTimer));
+            //StartCoroutine(DelayTimer(a.time));
         }
     }
 
@@ -60,10 +84,33 @@ public class BossFightManager : MonoBehaviour
             DoAbility(bossTimeline[index]);
     }
 
-    private void BossMoveFunction(float speed, Vector3 position)
+    private Vector3 vectorTrans(Vector2 pos)
     {
-        var motion = gameObject.transform.position - position;
-        con.Move(motion * speed);
+        return new Vector3(pos.x, 0, pos.y);
+    }
+
+    private void BossMoveFunction(float duration, Vector2[] position, bool random, BossAbilityTarget target)
+    {
+        int j = 0;
+        if (random)
+        {
+            j = UnityEngine.Random.Range(0, position.Length);
+        }
+
+        var motion = Vector3.zero;
+        switch (target)
+        {
+            case BossAbilityTarget.none:
+                motion = vectorTrans(position[j]);
+                break;
+            case BossAbilityTarget.player:
+                motion = vectorTrans(position[j]) + con.transform.position;
+                break;
+            case BossAbilityTarget.boss:
+                motion = vectorTrans(position[j]) + this.transform.position;
+                break;
+        }
+        con.Move(motion * duration);
     }
 
     private void BossAttackFunction(HitBoxAttack[] attacks)
@@ -71,22 +118,47 @@ public class BossFightManager : MonoBehaviour
         for (int i = 0; i < attacks.Length; i++)
         {
             int h;
-            if (attacks[i].hitBoxType == hitBoxType.Cube)
+            if (attacks[i].hitBoxType == HitBoxType.Cube)
                 h = 0;
-            else
+            else if (attacks[i].hitBoxType == HitBoxType.Cylinder)
                 h = 1;
+            else
+                h = 2;
 
-            HitBox(h, attacks[i].damage, attacks[i].x, attacks[i].y, attacks[i].time, attacks[i].position, attacks[i].rotation);
+            int j = 0;
+            if (attacks[i].random)
+            {
+                j = UnityEngine.Random.Range(0, attacks[i].offSet.Length);
+            }
+
+            Vector3 target = Vector3.zero;
+            switch (attacks[i].target)
+            {
+                case BossAbilityTarget.none:
+                    target = vectorTrans(attacks[i].offSet[j]);
+                    break;
+                case BossAbilityTarget.player:
+                    target = vectorTrans(attacks[i].offSet[j]) + con.transform.position;
+                    break;
+                case BossAbilityTarget.boss:
+                    target = vectorTrans(attacks[i].offSet[j]) + this.transform.position;
+                    break;
+            }
+
+            HitBox(h, attacks[i].effect, attacks[i].duration, attacks[i].direction, attacks[i].damage, attacks[i].scale.x, attacks[i].scale.y, attacks[i].castTime, target, attacks[i].Yrotation);
         }
     }
 
-    private void HitBox(int index, float damage, float x, float y, float time, Vector3 position, Vector3 rotation)
+    private void HitBox(int index, HitBoxEffect[] effect, float duration, Vector2 direction, float damage, float x, float y, float castTime, Vector3 target, float rotation)
     {
-        //instantiate a cube hitbox and set all its variables
-        GameObject b = Instantiate(hitboxes[index], position, Quaternion.Euler(rotation));
+        //instantiate a hitbox and set all its variables
+        GameObject b = Instantiate(hitboxes[index], target, Quaternion.Euler(0, rotation, 0));
         b.transform.localScale = new Vector3(x, b.transform.localScale.y, y);
 
-        b.GetComponent<HitBox>().time = time;
+        b.GetComponent<HitBox>().castTime = castTime;
+        b.GetComponent<HitBox>().effect = effect;
+        b.GetComponent<HitBox>().duration = duration;
+        b.GetComponent<HitBox>().direction = direction;
         b.GetComponent<HitBox>().damage = damage;
     }
 }

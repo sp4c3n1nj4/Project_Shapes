@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
-    public float time;
+    //variables set on Instatiate
+    public float castTime;
+
+    public HitBoxEffect[] effect;
+    public float duration;
+    public Vector2 direction;
     public float damage;
 
     private float timer = 0;
@@ -36,28 +41,56 @@ public class HitBox : MonoBehaviour
         //advance timer and display it on the material
         timer += Time.deltaTime;
 
-        var per = timer / time;
+        var per = timer / castTime;
         per = Mathf.Clamp(per, 0, 1);
         material.SetFloat("_Fill_Rate", per);
 
-        if (timer >= time)
+        CheckCollision();
+    }
+
+    private void CheckCollision()
+    {
+        if (timer >= castTime)
         {
             material.SetColor("_Fill_Colour", completeColor);
-            if (playerIn)
+
+            bool isTower = UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.tower);
+
+            if ((playerIn && !isTower) || (!playerIn && isTower))
             {
                 PlayerHit();
                 stop = true;
-                Destroy(gameObject, 0.2f);
+                castTimerReached();
             }
             else
-                Destroy(gameObject, 0.2f);
+                castTimerReached();
         }
     }
 
     private void PlayerHit()
     {
         print("player hit");
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(damage);
+
+        if (UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.damage))
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
+
+        if (UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.knockback))
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>().Move(direction);
+        }
+    }
+
+    private IEnumerable castTimerReached()
+    {
+        if (UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.continous))
+        {
+            yield return new WaitForSeconds(duration);
+            Destroy(gameObject, 0.2f);
+        }
+        else
+            Destroy(gameObject, 0.2f);
     }
 
     private void OnTriggerEnter(Collider other)
