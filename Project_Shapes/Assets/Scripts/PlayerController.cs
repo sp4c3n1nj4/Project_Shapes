@@ -2,14 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float slow = 1;
     public CharacterController player;
+    public PlayerInputActions inputActions;
 
+    private InputAction move;
     private Vector3 directionInput;
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        move = inputActions.Player.Move;
+        move.Enable();
+    }
 
     //update physics of player
     private void FixedUpdate()
@@ -34,8 +48,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 input = Vector3.zero;
 
-        input.x = Input.GetAxis("Horizontal");
-        input.z = Input.GetAxis("Vertical");
+        //print(move.ReadValue<Vector2>());
+
+        input.x = move.ReadValue<Vector2>().x;
+        input.z = move.ReadValue<Vector2>().y;
 
         //normalize in case of diagonal movement direction
         if (input.magnitude > 1)

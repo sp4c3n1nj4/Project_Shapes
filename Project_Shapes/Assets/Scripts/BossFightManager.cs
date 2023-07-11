@@ -31,6 +31,8 @@ public class BossFightManager : MonoBehaviour
 
     private void Update()
     {
+        //return;
+
         //advance timer and update ui      
         timer += Time.deltaTime;
         timerUI.text = timer.ToString("N2");
