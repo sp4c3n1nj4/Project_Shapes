@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//using the Text Mesh Pro Plugin for UI
 using TMPro;
+//suing statements to enable the saving/loading of the timeline list into/from a binary file
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 [Serializable]
 public class BossFightManager : MonoBehaviour
@@ -13,25 +18,73 @@ public class BossFightManager : MonoBehaviour
     private CharacterController con;
     [SerializeField]
     private TextMeshProUGUI timerUI;
-
-    //using a custom Unity Package myde by Textus Games, allows to set and save child classes in the editor
-    [SerializeReference, SerializeReferenceButton]
-    public List<BossAbilities> bossTimeline;
+    [SerializeField]
+    private GameObject player;
 
     [SerializeField]
     private int index = 0;
     [SerializeField]
     private float timer = 90;
+    private bool fightOver = false;
+
+    public string bossFightName = "Fight 1";
+    //using a custom Unity Package myde by Textus Games (https://github.com/TextusGames/UnitySerializedReferenceUI), allows to set and save child classes in the editor
+    [SerializeReference, SerializeReferenceButton]
+    public List<BossAbilities> bossTimeline;
+
+    public void SaveBossTimeline()
+    {
+        if (bossTimeline == null)
+        {
+            throw new ArgumentNullException("Timeline empty");
+        }
+
+        var surrogateSelector = new SurrogateSelector();
+        surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), new Vector2Surrogate());
+
+        FileStream stream = new FileStream(bossFightName, FileMode.Create);
+
+        IFormatter formatter = new BinaryFormatter();
+        formatter.SurrogateSelector = surrogateSelector;
+        formatter.Serialize(stream, bossTimeline);
+
+        stream.Close();
+
+        Debug.Log("timeline saved");
+    }
+
+    public void LoadBossTimeline(string name)
+    {
+        var surrogateSelector = new SurrogateSelector();
+        surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), new Vector2Surrogate());
+
+        using Stream stream = File.Open(name, FileMode.Open);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        IFormatter formatter = new BinaryFormatter();
+        formatter.SurrogateSelector = surrogateSelector;
+
+        bossTimeline = (List<BossAbilities>)formatter.Deserialize(stream);
+
+        Debug.Log("timeline loaded");
+    }
 
     private void Start()
     {
+        //Ignore collision between player and enemies
+        Physics.IgnoreLayerCollision(6, 7, true);
+
+        //load boss by name given
+        LoadBossTimeline(bossFightName);
+
         //Sort List to ensure ability to execute first is first
-        bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));
+        bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));        
     }
 
     private void Update()
     {
-        //return;
+        if (bossTimeline == null || fightOver)
+            return;
 
         //advance timer and update ui      
         timer += Time.deltaTime;
@@ -43,7 +96,7 @@ public class BossFightManager : MonoBehaviour
             index++;
         }
 
-        if (timer > bossTimeline[bossTimeline.Count].time)
+        if (timer > bossTimeline[bossTimeline.Count - 1].time)
         {
             EndFight();
             return;
@@ -53,6 +106,7 @@ public class BossFightManager : MonoBehaviour
     private void EndFight()
     {
         //End the fight if end of list is reached
+        fightOver = true;
         Debug.LogWarning("End of Boss Timeline List reached");
     }
 
@@ -62,7 +116,7 @@ public class BossFightManager : MonoBehaviour
         if (ability.GetType() == typeof(BossMove))
         {
             var a = ability as BossMove;
-            BossMoveFunction(a.moveDuration, a.offSet, a.random, a.target);
+            BossMoveFunction(a.moveSpeed, a.offSet, a.random, a.target);
             //StartCoroutine(DelayTimer(a.time));
         }
         else if (ability.GetType() == typeof(BossAttack))
@@ -86,9 +140,14 @@ public class BossFightManager : MonoBehaviour
             DoAbility(bossTimeline[index]);
     }
 
-    private Vector3 vectorTrans(Vector2 pos)
+    private Vector3 offSetVector(Vector2 offSet, Vector3 origin = new Vector3(), Vector3 start = new Vector3())
     {
-        return new Vector3(pos.x, 0, pos.y);
+        Vector3 offSet3 = new(offSet.x, 0, offSet.y);
+
+        Vector3 direction = (origin + offSet3) - start;
+        direction.y = 0;
+
+        return direction;
     }
 
     private void BossMoveFunction(float duration, Vector2[] position, bool random, BossAbilityTarget target)
@@ -103,16 +162,17 @@ public class BossFightManager : MonoBehaviour
         switch (target)
         {
             case BossAbilityTarget.none:
-                motion = vectorTrans(position[j]);
+                motion = offSetVector(position[j], Vector3.zero, this.transform.position);
                 break;
             case BossAbilityTarget.player:
-                motion = vectorTrans(position[j]) + con.transform.position;
+                motion = offSetVector(position[j], player.transform.position, this.transform.position);
                 break;
             case BossAbilityTarget.boss:
-                motion = vectorTrans(position[j]) + this.transform.position;
+                motion = offSetVector(position[j]);
                 break;
         }
-        con.Move(motion * duration);
+        Debug.Log("completed boss move to: " + (motion + this.transform.position).ToString());
+        con.Move(motion * duration);        
     }
 
     private void BossAttackFunction(HitBoxAttack[] attacks)
@@ -137,18 +197,19 @@ public class BossFightManager : MonoBehaviour
             switch (attacks[i].target)
             {
                 case BossAbilityTarget.none:
-                    target = vectorTrans(attacks[i].offSet[j]);
+                    target = offSetVector(attacks[i].offSet[j], Vector3.zero);
                     break;
                 case BossAbilityTarget.player:
-                    target = vectorTrans(attacks[i].offSet[j]) + con.transform.position;
+                    target = offSetVector(attacks[i].offSet[j], con.transform.position);
                     break;
                 case BossAbilityTarget.boss:
-                    target = vectorTrans(attacks[i].offSet[j]) + this.transform.position;
+                    target = offSetVector(attacks[i].offSet[j], this.transform.position);
                     break;
             }
 
             HitBox(h, target, attacks[i]);
         }
+        Debug.Log("completed boss attack");
     }
 
     private void HitBox(int index, Vector3 target, HitBoxAttack attack)

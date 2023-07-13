@@ -2,6 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Runtime.Serialization;
+
+//implementiong Vector2 Serialization Surrogate as Vector2 is not Serialized Innately
+[Serializable]
+public class Vector2Surrogate : ISerializationSurrogate
+{
+    public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)
+    {
+        Vector2 vector2 = (Vector2)obj;
+        info.AddValue("x", vector2.x);
+        info.AddValue("y", vector2.y);
+    }
+
+    public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
+    {
+        Vector2 vector2 = (Vector2)obj;
+        vector2.x = info.GetSingle("x");
+        vector2.y = info.GetSingle("y");
+        return vector2;
+    }
+}
 
 [Serializable]
 public class BossAbilities
@@ -10,6 +31,7 @@ public class BossAbilities
     public float time;
 }
 
+[Serializable]
 public enum BossAbilityTarget
 {
     //enum to select the different target for the movement
@@ -22,7 +44,7 @@ public enum BossAbilityTarget
 public class BossMove : BossAbilities
 {
     //child class for boss movement
-    public float moveDuration;
+    public float moveSpeed = 1f;
 
     //the centre of the move to which the offset is added to get the desired target
     public BossAbilityTarget target;
@@ -38,6 +60,7 @@ public class BossAttack : BossAbilities
     public HitBoxAttack[] boxAttacks;
 }
 
+[Serializable]
 public enum HitBoxType
 {
     //enum to differentiate between the hitbox types
@@ -46,6 +69,7 @@ public enum HitBoxType
     Donut
 }
 
+[Serializable]
 public enum HitBoxEffect
 {
     damage,
