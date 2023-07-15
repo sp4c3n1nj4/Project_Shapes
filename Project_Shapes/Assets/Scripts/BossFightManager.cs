@@ -74,8 +74,7 @@ public class BossFightManager : MonoBehaviour
         //Ignore collision between player and enemies
         Physics.IgnoreLayerCollision(6, 7, true);
 
-        //load boss by name given
-        LoadBossTimeline(bossFightName);
+        //LoadBossTimeline(bossFightName);
 
         //Sort List to ensure ability to execute first is first
         bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));        
@@ -200,7 +199,7 @@ public class BossFightManager : MonoBehaviour
                     target = offSetVector(attacks[i].offSet[j], Vector3.zero);
                     break;
                 case BossAbilityTarget.player:
-                    target = offSetVector(attacks[i].offSet[j], con.transform.position);
+                    target = offSetVector(attacks[i].offSet[j], player.transform.position);
                     break;
                 case BossAbilityTarget.boss:
                     target = offSetVector(attacks[i].offSet[j], this.transform.position);
@@ -208,8 +207,10 @@ public class BossFightManager : MonoBehaviour
             }
 
             HitBox(h, target, attacks[i]);
+
+            Debug.Log("spawned " + attacks[i].hitBoxType.ToString() +" attack at: " + target.ToString());
         }
-        Debug.Log("completed boss attack");
+        
     }
 
     private void HitBox(int index, Vector3 target, HitBoxAttack attack)

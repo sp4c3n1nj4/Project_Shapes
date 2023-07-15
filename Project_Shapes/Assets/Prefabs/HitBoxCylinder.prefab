@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4474099656080766058}
   - component: {fileID: 4474099656080766059}
   - component: {fileID: 8402239703138577935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitBoxCylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4474099656080766052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,7 +96,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8402239703138577935
@@ -111,7 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d206ebfa78ed8de43aebd3b900080e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
+  castTime: 0
+  effect: 
+  hitBoxDuration: 0
+  direction: {x: 0, y: 0}
   damage: 0
+  status: []
+  statusDuration: 0
+  cleanseStatus: []
   cube: 0
   completeColor: {r: 0.627451, g: 0, b: 0, a: 0}

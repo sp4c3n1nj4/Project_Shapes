@@ -58,16 +58,16 @@ public class HitBox : MonoBehaviour
         {
             material.SetColor("_Fill_Colour", completeColor);
 
-            bool isTower = UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.tower);
+            bool isTower = UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.tower);   
 
             if ((playerIn && !isTower) || (!playerIn && isTower))
             {
                 PlayerHit();
                 stop = true;
-                castTimerReached();
+                StartCoroutine(castTimerReached());
             }
             else
-                castTimerReached();
+                StartCoroutine(castTimerReached());
         }
     }
 
@@ -86,15 +86,24 @@ public class HitBox : MonoBehaviour
         }
     }
 
-    private IEnumerable castTimerReached()
+    private void ApplyStatus()
     {
+
+    }
+
+    private IEnumerator castTimerReached()
+    {
+        if (effect == null)
+        {
+            Destroy(gameObject, 0.5f);
+        }
+
         if (UnityEditor.ArrayUtility.Contains(effect, HitBoxEffect.continous))
         {
             yield return new WaitForSeconds(hitBoxDuration);
-            Destroy(gameObject, 0.2f);
         }
-        else
-            Destroy(gameObject, 0.2f);
+
+        Destroy(gameObject, 0.5f);
     }
 
     private void OnTriggerEnter(Collider other)

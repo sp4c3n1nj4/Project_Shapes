@@ -322,7 +322,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &159407180
@@ -753,6 +753,7 @@ MonoBehaviour:
   bossFightName: Fight 1
   bossTimeline:
   - rid: 3919620727155720294
+  - rid: 3919620769503248389
   references:
     version: 2
     RefIds:
@@ -764,7 +765,30 @@ MonoBehaviour:
         target: 0
         random: 0
         offSet:
-        - {x: 1, y: -5}
+        - {x: 10, y: 0}
+    - rid: 3919620769503248389
+      type: {class: BossAttack, ns: , asm: Assembly-CSharp}
+      data:
+        time: 1
+        boxAttacks:
+        - hitBoxType: 0
+          castTime: 1
+          effect: 00000000
+          hitBoxDuration: 0
+          direction: {x: 0, y: 0}
+          damage: 1
+          status:
+          - Name: Damage Down
+            effect: 1
+            duration: 0
+          statusDuration: 100
+          cleanseStatus: []
+          scale: {x: 40, y: 40}
+          Yrotation: 0
+          target: 1
+          random: 0
+          offSet:
+          - {x: 0, y: 0}
 --- !u!143 &314166798
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1092,7 +1116,6 @@ GameObject:
   - component: {fileID: 454947223}
   - component: {fileID: 454947226}
   - component: {fileID: 454947225}
-  - component: {fileID: 454947224}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
@@ -1115,19 +1138,6 @@ Transform:
   m_Father: {fileID: 84533985}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &454947224
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454947222}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &454947225
 MeshRenderer:
   m_ObjectHideFlags: 0
