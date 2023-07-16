@@ -227,7 +227,6 @@ public class BossFightManager : MonoBehaviour
         b.GetComponent<HitBox>().damage = attack.damage;
 
         b.GetComponent<HitBox>().status = attack.status;
-        b.GetComponent<HitBox>().statusDuration = attack.statusDuration;
         b.GetComponent<HitBox>().cleanseStatus = attack.cleanseStatus;
     }
 }

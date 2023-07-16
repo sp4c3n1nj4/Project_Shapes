@@ -5,6 +5,7 @@ using System;
 
 public enum StatusEffect
 {
+    //the different effects a status can have
     slow,
     damageDown,
     mechanic
@@ -13,29 +14,32 @@ public enum StatusEffect
 [Serializable]
 public class StatusEffectData
 {
+    // a class to hold the details of a status effect
     public string Name;
     public StatusEffect effect;
 
     public float duration;
 }
 
+//bellow is unused
+
 [Serializable]
 public class SlowStatus : StatusEffectData
 {
-    public new string Name = "Slow";
-    public new StatusEffect effect = StatusEffect.slow;
+    string Name = "Slow";
+    StatusEffect effect = StatusEffect.slow;
 }
 
 [Serializable]
 public class DamageDownStatus : StatusEffectData
 {
-    public new string Name = "Damage Down";
-    public new StatusEffect effect = StatusEffect.damageDown;
+    public string Name = "Damage Down";
+    public StatusEffect effect = StatusEffect.damageDown;
 }
 
 [Serializable]
 public class MechanicStatus1 : StatusEffectData
 {
-    public new string Name = "Mechanic 1";
-    public new StatusEffect effect = StatusEffect.mechanic;
+    public string Name = "Mechanic 1";
+    public StatusEffect effect = StatusEffect.mechanic;
 }

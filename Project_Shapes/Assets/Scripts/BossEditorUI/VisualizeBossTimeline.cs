@@ -1,34 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class VisualizeBossTimeline : MonoBehaviour
 {
-    //get boss timeline
-    //get max duration
-    //make scroller
-
-    //place items at spots
-    //add infomtaion about items
-
-    //update items shown with scroller
     [SerializeField]
-    private GameObject ScrollContainer;
+    private GameObject prefab, selectArrow, gridContent;
     [SerializeField]
-    private GameObject GridPrefab;
+    private BossFightManager manager;
+    [SerializeField]
+    private AbilityUI abilityEditor;
 
     private void Start()
     {
-        InstatiateTimeLineGrid(30f);
+        PopulateTimeline();
     }
 
-    private void InstatiateTimeLineGrid(float fightDuration)
+    public void PopulateTimeline()
     {
-        for (int i = 0; i < fightDuration; i++)
+        foreach (Transform child in gridContent.transform)
         {
-            GameObject cell = Instantiate(GridPrefab);
-            cell.transform.SetParent(ScrollContainer.transform, false);
-            cell.GetComponent<TimeLineNumbering>().index = i + 1;
+            GameObject.Destroy(child.gameObject);
         }
+
+        for (int i = 0; i < manager.bossTimeline.Count; i++)
+        {
+            GameObject g = Instantiate(prefab, gridContent.transform);
+            g.GetComponent<TimelineElement>().index = i;
+            g.GetComponent<TimelineElement>().GetComponentInChildren<TextMeshProUGUI>().text = manager.bossTimeline[i].GetType().ToString().Remove(0, 4) + "   " + manager.bossTimeline[i].time.ToString("N2");
+            
+        }
+    }
+
+    public void SelectEntry(GameObject self, int index)
+    {
+        selectArrow.transform.SetParent(self.transform, false);
+        selectArrow.SetActive(true);
+        abilityEditor.gameObject.SetActive(true);
+        abilityEditor.index = index;
+        abilityEditor.UpdateEntry();
     }
 }

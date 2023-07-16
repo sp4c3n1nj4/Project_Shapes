@@ -72,6 +72,7 @@ public enum HitBoxType
 [Serializable]
 public enum HitBoxEffect
 {
+    //enum to differentiate between the different effects of hitboxes
     damage,
     continous,
     knockback,
@@ -92,8 +93,9 @@ public class HitBoxAttack
     public Vector2 direction = Vector2.zero;
     public float damage = 0;
 
+    [SerializeReference, SerializeReferenceButton]
     public StatusEffectData[] status = new StatusEffectData[0];
-    public float statusDuration = 0;
+    [SerializeReference, SerializeReferenceButton]
     public StatusEffectData[] cleanseStatus = new StatusEffectData[0];
 
     //scale and rotation get set durant instantiate
