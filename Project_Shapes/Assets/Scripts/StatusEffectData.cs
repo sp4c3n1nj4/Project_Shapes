@@ -23,23 +23,23 @@ public class StatusEffectData
 
 //bellow is unused
 
-[Serializable]
-public class SlowStatus : StatusEffectData
-{
-    string Name = "Slow";
-    StatusEffect effect = StatusEffect.slow;
-}
+//[Serializable]
+//public class SlowStatus : StatusEffectData
+//{
+//    string Name = "Slow";
+//    StatusEffect effect = StatusEffect.slow;
+//}
 
-[Serializable]
-public class DamageDownStatus : StatusEffectData
-{
-    public string Name = "Damage Down";
-    public StatusEffect effect = StatusEffect.damageDown;
-}
+//[Serializable]
+//public class DamageDownStatus : StatusEffectData
+//{
+//    public string Name = "Damage Down";
+//    public StatusEffect effect = StatusEffect.damageDown;
+//}
 
-[Serializable]
-public class MechanicStatus1 : StatusEffectData
-{
-    public string Name = "Mechanic 1";
-    public StatusEffect effect = StatusEffect.mechanic;
-}
+//[Serializable]
+//public class MechanicStatus1 : StatusEffectData
+//{
+//    public string Name = "Mechanic 1";
+//    public StatusEffect effect = StatusEffect.mechanic;
+//}

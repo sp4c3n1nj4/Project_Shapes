@@ -38,7 +38,6 @@ public class VisualizeBossTimeline : MonoBehaviour
         selectArrow.transform.SetParent(self.transform, false);
         selectArrow.SetActive(true);
         abilityEditor.gameObject.SetActive(true);
-        abilityEditor.index = index;
-        abilityEditor.UpdateEntry();
+        abilityEditor.UpdateEntry(index);
     }
 }
