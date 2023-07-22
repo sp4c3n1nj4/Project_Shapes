@@ -2082,6 +2082,43 @@ MonoBehaviour:
   - {fileID: 1144189101}
   - {fileID: 958271704}
   - {fileID: 790679159}
+  bossMove:
+    time: 0
+    moveSpeed: 1
+    target: 0
+    random: 0
+    offSet: []
+  moveTime: {fileID: 1934167863}
+  movePositionX: {fileID: 691865534}
+  movePositionY: {fileID: 1164077912}
+  moveSpeed: {fileID: 1209324582}
+  moveTarget: {fileID: 995327351}
+  bossAttack:
+    time: 0
+    boxAttacks: []
+  attackTime: {fileID: 944700285}
+  attackCastTime: {fileID: 308366515}
+  attackScaleX: {fileID: 2109285012}
+  attackScaleY: {fileID: 1790302497}
+  attackPositionX: {fileID: 285362824}
+  attackPositionY: {fileID: 556007480}
+  attackDamage: {fileID: 2136624521}
+  attackDuration: {fileID: 1670244212}
+  attackKnockbackX: {fileID: 1064682994}
+  attackKnockbackY: {fileID: 675035706}
+  attackDDDuration: {fileID: 0}
+  attackSlowDuration: {fileID: 0}
+  attackRotation: {fileID: 1310665056}
+  attackShape: {fileID: 795452993}
+  attackTarget: {fileID: 869229266}
+  attackEffectDamage: {fileID: 243798069}
+  attackEffectContinous: {fileID: 557071574}
+  attackEffectKnockback: {fileID: 348420604}
+  attackStatusDD: {fileID: 751543310}
+  attackStatusSlow: {fileID: 2066034613}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &202653137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2357,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &245264679
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,7 +3589,7 @@ MonoBehaviour:
         boxAttacks:
         - hitBoxType: 0
           castTime: 1
-          effect: 00000000
+          effect: 0000000000000000
           hitBoxDuration: 0
           direction: {x: 0, y: 0}
           damage: 1
@@ -3827,7 +3864,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &359275474
 GameObject:
   m_ObjectHideFlags: 0
@@ -5892,7 +5929,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &567277396
 GameObject:
   m_ObjectHideFlags: 0
@@ -7799,7 +7836,7 @@ GameObject:
   - component: {fileID: 747064391}
   - component: {fileID: 747064390}
   m_Layer: 5
-  m_Name: continous toggle (2)
+  m_Name: slow toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8061,7 +8098,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &759779464
 GameObject:
   m_ObjectHideFlags: 0
@@ -13652,7 +13689,7 @@ GameObject:
   - component: {fileID: 1273702048}
   - component: {fileID: 1273702047}
   m_Layer: 5
-  m_Name: continous toggle (1)
+  m_Name: damage down toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19439,7 +19476,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &2070408655
 GameObject:
   m_ObjectHideFlags: 0
