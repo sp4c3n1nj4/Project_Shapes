@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FightEditor.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/FightPlayer.unity
+    guid: 57c2c488877b2a742be89e7785b8d035
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9f7804fc80b746b45b7c8740b43359b2, type: 2}

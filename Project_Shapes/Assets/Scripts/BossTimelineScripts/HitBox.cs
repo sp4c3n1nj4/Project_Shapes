@@ -12,9 +12,9 @@ public class HitBox : MonoBehaviour
     public Vector2 direction;
     public float damage;
 
-    public StatusEffectData[] status;
+    public StatusEffect[] status;
     public float statusDuration;
-    public StatusEffectData[] cleanseStatus;
+    public StatusEffect[] cleanseStatus;
 
     private float timer = 0;
     private Material material;

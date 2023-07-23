@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class VisualizeBossTimeline : MonoBehaviour
     private BossFightManager manager;
     [SerializeField]
     private AbilityUI abilityEditor;
+    private int indexSelected;
 
     private void Start()
     {
@@ -19,6 +21,8 @@ public class VisualizeBossTimeline : MonoBehaviour
 
     public void PopulateTimeline()
     {
+        manager.SortBossTimeline();
+
         foreach (Transform child in gridContent.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -35,9 +39,35 @@ public class VisualizeBossTimeline : MonoBehaviour
 
     public void SelectEntry(GameObject self, int index)
     {
-        selectArrow.transform.SetParent(self.transform, false);
+        indexSelected = index;
+        selectArrow.transform.position = self.transform.position;
         selectArrow.SetActive(true);
         abilityEditor.gameObject.SetActive(true);
         abilityEditor.UpdateEntry(index);
+    }
+
+    public void DeleteEntry()
+    {
+        manager.bossTimeline.RemoveAt(indexSelected);
+        abilityEditor.gameObject.SetActive(false);
+        selectArrow.transform.position = Vector3.zero;
+        selectArrow.SetActive(false);
+        PopulateTimeline();
+    }
+
+    public void AddAttack() 
+    {
+        BossAttack b = new BossAttack();
+        b.time = manager.bossTimeline.Last().time + 1f;
+        manager.bossTimeline.Add(b);
+        PopulateTimeline();
+    }
+
+    public void AddMove()
+    {
+        BossMove b = new BossMove();
+        b.time = manager.bossTimeline.Last().time + 1f;
+        manager.bossTimeline.Add(b);
+        PopulateTimeline();
     }
 }

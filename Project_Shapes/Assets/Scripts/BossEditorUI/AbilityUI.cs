@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+//using for more array functionality
 using System.Linq;
-using System.Reflection;
+//using statements to interact with Ui elements
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +16,11 @@ public class AbilityUI : MonoBehaviour
     [SerializeField]
     private GameObject[] moveUI, attackUI;
 
+    //all UI elements for Boss Moves
     [SerializeField]
     private BossMove bossMove;
+    [SerializeField]
+    private VirtualBossMove vBossMove;
     [SerializeField]
     private TMP_InputField moveTime, movePositionX, movePositionY;
     [SerializeField]
@@ -24,8 +28,11 @@ public class AbilityUI : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown moveTarget;
 
+    //All UI elements for Boss attacks
     [SerializeField]
     private BossAttack bossAttack;
+    [SerializeField]
+    private VirtualBossAttack vBossAttack;
     [SerializeField]
     private TMP_InputField attackTime, attackCastTime, attackScaleX, attackScaleY, attackPositionX, attackPositionY, attackDamage, attackDuration,
         attackKnockbackX, attackKnockbackY, attackDDDuration, attackSlowDuration;
@@ -34,7 +41,7 @@ public class AbilityUI : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown attackShape, attackTarget;
     [SerializeField]
-    private Toggle attackEffectDamage, attackEffectContinous, attackEffectKnockback, attackStatusDD, attackStatusSlow;
+    private Toggle attackEffectDamage, attackEffectContinous, attackEffectKnockback, attackEffectTower, attackStatusDD, attackStatusSlow;
 
 
     public void UpdateEntry(int index)
@@ -42,11 +49,13 @@ public class AbilityUI : MonoBehaviour
         if (manager.bossTimeline[index].GetType().Equals(typeof(BossAttack)))
         {            
             bossAttack = (BossAttack)manager.bossTimeline[index];
+            vBossAttack.index = index;
             DisplayAttackEdit();
         }
         else if (manager.bossTimeline[index].GetType().Equals(typeof(BossMove)))
         {            
             bossMove = (BossMove)manager.bossTimeline[index];
+            vBossMove.index = index;
             DisplayMoveEdit();
         }
     }
@@ -56,16 +65,7 @@ public class AbilityUI : MonoBehaviour
         ToggleUIMode(false);
         PopulateMoveUI();
 
-        print("Move:");
-
-        BindingFlags bindingFlags = BindingFlags.Public |
-                            BindingFlags.NonPublic |
-                            BindingFlags.Instance |
-                            BindingFlags.Static;
-        foreach (FieldInfo field in bossMove.GetType().GetFields(bindingFlags))
-        {
-            Debug.Log(field.GetValue(bossMove));
-        }
+        print("Selected move:");
     }
 
     private void PopulateMoveUI()
@@ -97,16 +97,7 @@ public class AbilityUI : MonoBehaviour
         ToggleUIMode(true);
         PopulateAttackUI();
 
-        print("Attack:");
-
-        BindingFlags bindingFlags = BindingFlags.Public |
-                            BindingFlags.NonPublic |
-                            BindingFlags.Instance |
-                            BindingFlags.Static;
-        foreach (FieldInfo field in bossAttack.GetType().GetFields(bindingFlags))
-        {
-            Debug.Log(field.GetValue(bossAttack));
-        }
+        print("Selected attack:");
     }
 
     private void PopulateAttackUI()
@@ -158,8 +149,10 @@ public class AbilityUI : MonoBehaviour
             attackKnockbackX.text = bossAttack.boxAttacks[0].direction.x.ToString();
             attackKnockbackY.text = bossAttack.boxAttacks[0].direction.y.ToString();
         }
-
-        
+        if (bossAttack.boxAttacks[0].effect.Contains(HitBoxEffect.tower))
+        {
+            attackEffectTower.isOn = true;
+        }
     }
 
     private void ToggleUIMode(bool isAttack)
@@ -172,5 +165,15 @@ public class AbilityUI : MonoBehaviour
         {
             moveUI[i].SetActive(!isAttack);
         }
+    }
+
+    public void CloseEditUI()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void DeleteEntry()
+    {
+
     }
 }

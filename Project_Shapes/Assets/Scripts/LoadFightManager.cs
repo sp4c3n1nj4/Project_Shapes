@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+//system.io needed to access the locally stored fight files
 using System.IO;
+//tmpro for UI elements
 using TMPro;
+//scenem management to change scenes
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +14,8 @@ public class LoadFightManager : MonoBehaviour
     private GameObject prefab, scrollList;
     [SerializeField]
     private TextMeshProUGUI text;
+    [SerializeField]
+    private DontDestroyOnLoad dontDestroy;
 
     public string fight = "";
 
@@ -24,7 +29,7 @@ public class LoadFightManager : MonoBehaviour
     {
         //load scene based on selected mode and pass on the selected fight to load
 
-        //stuff
+        dontDestroy.fight = fight;
 
         if (gameObject.GetComponentInParent<MainMenuManager>().editingMode)
         {
@@ -38,7 +43,7 @@ public class LoadFightManager : MonoBehaviour
 
     public void CreateFight()
     {
-
+        SceneManager.LoadScene(1);
     }
 
     public void SelectFile(string name)

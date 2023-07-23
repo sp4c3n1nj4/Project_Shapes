@@ -4,10 +4,12 @@ using UnityEngine;
 using System;
 //using the Text Mesh Pro Plugin for UI
 using TMPro;
-//suing statements to enable the saving/loading of the timeline list into/from a binary file
+//using statements to enable the saving/loading of the timeline list into/from a binary file
 using System.IO;
+//using binary formater to read and write fights to binary files
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class BossFightManager : MonoBehaviour
@@ -24,8 +26,12 @@ public class BossFightManager : MonoBehaviour
     [SerializeField]
     private int index = 0;
     [SerializeField]
-    private float timer = 90;
-    private bool fightOver = false;
+    private float timer = 0;
+    public bool fightOver = true;
+    public bool editMode = true;
+
+    public Vector3 BossStartPosition;
+    public Vector3 PlayerStartPosition;
 
     public string bossFightName = "Fight 1";
     //using a custom Unity Package myde by Textus Games (https://github.com/TextusGames/UnitySerializedReferenceUI), allows to set and save child classes in the editor
@@ -42,7 +48,7 @@ public class BossFightManager : MonoBehaviour
         var surrogateSelector = new SurrogateSelector();
         surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), new Vector2Surrogate());
 
-        FileStream stream = new FileStream(bossFightName, FileMode.Create);
+        FileStream stream = new FileStream("Fights/" + bossFightName, FileMode.Create);
 
         IFormatter formatter = new BinaryFormatter();
         formatter.SurrogateSelector = surrogateSelector;
@@ -55,10 +61,11 @@ public class BossFightManager : MonoBehaviour
 
     public void LoadBossTimeline(string name)
     {
+        //load the boss fight based on the given name
         var surrogateSelector = new SurrogateSelector();
         surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), new Vector2Surrogate());
 
-        using Stream stream = File.Open(name, FileMode.Open);
+        using Stream stream = File.Open("Fights/" + name, FileMode.Open);
         stream.Seek(0, SeekOrigin.Begin);
 
         IFormatter formatter = new BinaryFormatter();
@@ -69,15 +76,31 @@ public class BossFightManager : MonoBehaviour
         Debug.Log("timeline loaded");
     }
 
+    public void TestFight()
+    {
+        timer = 0;
+        index = 0;
+        gameObject.transform.position = BossStartPosition;
+        player.transform.position = PlayerStartPosition;
+
+        fightOver = false;
+    }
+
     private void Start()
     {
+        gameObject.transform.position = BossStartPosition;
+        player.transform.position = PlayerStartPosition;
+
         //Ignore collision between player and enemies
         Physics.IgnoreLayerCollision(6, 7, true);
 
-        //LoadBossTimeline(bossFightName);
-
         //Sort List to ensure ability to execute first is first
-        bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));        
+        SortBossTimeline();
+    }
+
+    public void SortBossTimeline()
+    {
+        bossTimeline.Sort((x, y) => x.time.CompareTo(y.time));
     }
 
     private void Update()
@@ -219,14 +242,17 @@ public class BossFightManager : MonoBehaviour
         GameObject b = Instantiate(hitboxes[index], target, Quaternion.Euler(0, attack.Yrotation, 0));
         b.transform.localScale = new Vector3(attack.scale.x, b.transform.localScale.y, attack.scale.y);
 
-        b.GetComponent<HitBox>().castTime = attack.castTime;
+        HitBox hitBox = b.GetComponent<HitBox>();
 
-        b.GetComponent<HitBox>().effect = attack.effect;
-        b.GetComponent<HitBox>().hitBoxDuration = attack.hitBoxDuration;
-        b.GetComponent<HitBox>().direction = attack.direction;
-        b.GetComponent<HitBox>().damage = attack.damage;
+        hitBox.castTime = attack.castTime;
 
-        b.GetComponent<HitBox>().status = attack.status;
-        b.GetComponent<HitBox>().cleanseStatus = attack.cleanseStatus;
+        hitBox.effect = attack.effect.ToArray();
+        hitBox.hitBoxDuration = attack.hitBoxDuration;
+        hitBox.direction = attack.direction;
+        hitBox.damage = attack.damage;
+
+        hitBox.status = attack.status.ToArray();
+        hitBox.cleanseStatus = attack.cleanseStatus.ToArray();
+        hitBox.statusDuration = attack.statusDuration;
     }
 }

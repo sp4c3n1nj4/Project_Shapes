@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour, IEffectable
     public float health;
     public float maxHealth;
 
-    private List<StatusEffectData> status;
+    private List<StatusEffect> status;
 
     public virtual void Update()
     {
@@ -32,7 +32,7 @@ public class Entity : MonoBehaviour, IEffectable
         health = Mathf.Clamp(health, 0, maxHealth);
     }
 
-    public void ApplyEffect(StatusEffectData[] data = null)
+    public void ApplyEffect(StatusEffect[] data = null)
     {
         if (data == null)
             return;
@@ -41,12 +41,12 @@ public class Entity : MonoBehaviour, IEffectable
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (data[i].effect == StatusEffect.slow)
+            if (data[i] == StatusEffect.slow)
             {
                 ApplySlow();
             }
 
-            if (data[i].effect == StatusEffect.damageDown)
+            if (data[i] == StatusEffect.damageDown)
             {
                 ApplyDamageDown();
             }
@@ -56,12 +56,12 @@ public class Entity : MonoBehaviour, IEffectable
     public virtual void ApplySlow() { }
     public virtual void ApplyDamageDown() { }
 
-    public void RemoveEffect(StatusEffectData[] data = null)
+    public void RemoveEffect(StatusEffect[] data = null)
     {
         if (data == null)
             return;
 
-        bool inArray(StatusEffectData item)
+        bool inArray(StatusEffect item)
         {
             return data.Contains(item);
         }

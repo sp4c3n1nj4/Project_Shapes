@@ -13,8 +13,12 @@ public class MenuManager : MonoBehaviour
 
     public void RetryButton()
     {
-        print("loading scene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (FindObjectOfType<DontDestroyOnLoad>().editMode)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+            SceneManager.LoadScene(0);
     }
 
     public void VictoryScreen()

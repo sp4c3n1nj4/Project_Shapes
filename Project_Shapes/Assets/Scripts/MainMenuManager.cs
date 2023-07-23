@@ -6,6 +6,8 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject modeUI, loadUI;
+    [SerializeField]
+    private DontDestroyOnLoad dontDestroy;
 
     public bool editingMode;
 
@@ -29,6 +31,11 @@ public class MainMenuManager : MonoBehaviour
     {
         modeUI.SetActive(false);
         loadUI.SetActive(true);
+    }
+
+    public void TouchToggle(bool state)
+    {
+        dontDestroy.touchMode = state;
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization;
 
-//implementiong Vector2 Serialization Surrogate as Vector2 is not Serialized Innately
+//implementiong Vector2 Serialization Surrogate since Vector2 is not Serialized Innately
 [Serializable]
 public class Vector2Surrogate : ISerializationSurrogate
 {
@@ -50,14 +50,14 @@ public class BossMove : BossAbilities
     public BossAbilityTarget target;
 
     public bool random = false;
-    public Vector2[] offSet;
+    public Vector2[] offSet = new Vector2[1] { Vector2.zero };
 }
 
 [Serializable]
 public class BossAttack : BossAbilities
 {
     //child class for boss attacks
-    public HitBoxAttack[] boxAttacks;
+    public HitBoxAttack[] boxAttacks = new HitBoxAttack[1] { new HitBoxAttack() };
 }
 
 [Serializable]
@@ -79,31 +79,42 @@ public enum HitBoxEffect
     tower
 }
 
+public enum StatusEffect 
+{ 
+    damageDown,
+    slow,
+    mechanic
+}
+
 [Serializable]
 public class HitBoxAttack
 {
     //class hold all the necessary variables to instantiate a hitbox
-    public HitBoxType hitBoxType;
+    public HitBoxType hitBoxType = HitBoxType.Cube;
 
     //cast time and effect get passed to hit box on Instantiate
-    public float castTime;
+    public float castTime = 0f;
 
-    public HitBoxEffect[] effect;
+    //List of Hitbox effects and their relevant variables
+    public List<HitBoxEffect> effect = new List<HitBoxEffect>();
     public float hitBoxDuration = 0;
     public Vector2 direction = Vector2.zero;
     public float damage = 0;
 
+    //List of status effects to apply and their duration
     [SerializeReference, SerializeReferenceButton]
-    public StatusEffectData[] status = new StatusEffectData[0];
+    public List<StatusEffect> status = new List<StatusEffect>();
+    //List of status effects to remove #not implemented
     [SerializeReference, SerializeReferenceButton]
-    public StatusEffectData[] cleanseStatus = new StatusEffectData[0];
+    public List<StatusEffect> cleanseStatus = new List<StatusEffect>();
+    public float statusDuration = 0f;
 
     //scale and rotation get set durant instantiate
-    public Vector2 scale;    
-    public float Yrotation;
+    public Vector2 scale = Vector2.zero;    
+    public float Yrotation = 0f;
 
     //the centre of the move to which the offset is added to get the desired target
-    public BossAbilityTarget target;
+    public BossAbilityTarget target = BossAbilityTarget.none;
     public bool random = false;
-    public Vector2[] offSet;
+    public Vector2[] offSet = new Vector2[1] { Vector2.zero };
 }

@@ -1,6 +1,6 @@
 public interface IEffectable
 {
-    public void ApplyEffect(StatusEffectData[] data = null);
-    public void RemoveEffect(StatusEffectData[] data = null);
+    public void ApplyEffect(StatusEffect[] data = null);
+    public void RemoveEffect(StatusEffect[] data = null);
 
 }
